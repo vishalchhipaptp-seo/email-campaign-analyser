@@ -18,13 +18,13 @@
   --purple:#6f42c1;--purple-bg:#e8d8fa;--purple-text:#3d1e7a;
   --grey-bg:#e9ecef;--grey-text:#343a40;
   --orange:#d05a00;--orange-bg:#fde8d4;--orange-text:#6b2d00;
+  --cyan:#0891b2;--cyan-bg:#cffafe;--cyan-text:#164e63;
   --shadow:0 1px 4px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.05);
   --radius:8px;--radius-lg:12px;
 }
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);font-size:14px;line-height:1.5;min-height:100vh}
 a{color:var(--blue)}
 
-/* Header */
 .header{background:var(--blue);color:var(--white);padding:0 24px;height:56px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .header-logo{font-size:13px;font-weight:600;letter-spacing:.5px;opacity:.85}
 .header-title{font-size:15px;font-weight:600;flex:1}
@@ -32,10 +32,8 @@ a{color:var(--blue)}
 .btn-clear{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--white);padding:6px 14px;border-radius:var(--radius);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s}
 .btn-clear:hover{background:rgba(255,255,255,.22)}
 
-/* Main layout */
 .main{max-width:1400px;margin:0 auto;padding:24px 20px}
 
-/* Upload zone */
 .upload-zone{border:2px dashed var(--border);border-radius:var(--radius-lg);background:var(--white);padding:60px 40px;text-align:center;cursor:pointer;transition:all .2s;position:relative}
 .upload-zone.drag-over{border-color:var(--blue);background:var(--blue-light)}
 .upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
@@ -46,11 +44,10 @@ a{color:var(--blue)}
 .file-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;justify-content:center}
 .file-chip{background:var(--teal-light);color:var(--teal);border-radius:20px;padding:4px 12px;font-size:12px;font-family:'DM Mono',monospace}
 
-/* Section headings */
 .section{margin-top:28px}
 .section-head{font-size:13px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--teal);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--teal-light)}
 
-/* Campaign cards grid */
+/* Campaign cards */
 .cards-scroll{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
 .camp-card{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:16px;box-shadow:var(--shadow)}
 .camp-card.combined{border-color:var(--teal);background:var(--teal-light)}
@@ -74,7 +71,7 @@ a{color:var(--blue)}
 .b-hard{background:var(--red-bg);color:var(--red-text)}
 .b-soft{background:var(--amber-bg);color:var(--amber-text)}
 
-/* Status breakdown chart */
+/* Status chart */
 .status-chart-wrap{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:16px;box-shadow:var(--shadow)}
 .stacked-bar{height:28px;border-radius:var(--radius);overflow:hidden;display:flex;margin-bottom:12px}
 .stacked-seg{height:100%;transition:width .4s ease;position:relative;cursor:default}
@@ -82,6 +79,48 @@ a{color:var(--blue)}
 .legend{display:flex;flex-wrap:wrap;gap:8px 16px}
 .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mid)}
 .legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+
+/* Smart Analysis */
+.action-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.action-card{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:18px;box-shadow:var(--shadow)}
+.action-card.ac-remove{border-left:4px solid var(--red)}
+.action-card.ac-retry{border-left:4px solid var(--amber)}
+.action-card.ac-keep{border-left:4px solid var(--green)}
+.action-card.ac-watch{border-left:4px solid var(--cyan)}
+.ac-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ac-title{font-size:13px;font-weight:600}
+.ac-count{font-size:22px;font-weight:700;font-family:'DM Mono',monospace}
+.ac-remove .ac-count{color:var(--red)}
+.ac-retry .ac-count{color:var(--amber)}
+.ac-keep .ac-count{color:var(--green)}
+.ac-watch .ac-count{color:var(--cyan)}
+.ac-desc{font-size:12px;color:var(--mid);margin-bottom:12px;line-height:1.5}
+.ac-reasons{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.ac-reason-row{display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid var(--border)}
+.ac-reason-row:last-child{border-bottom:none}
+.ac-reason-label{color:var(--mid);flex:1;padding-right:8px}
+.ac-reason-count{font-family:'DM Mono',monospace;font-weight:600;color:var(--dark)}
+.btn-export-action{width:100%;border:none;border-radius:var(--radius);padding:7px 12px;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-export-remove{background:var(--red-bg);color:var(--red-text)}
+.btn-export-retry{background:var(--amber-bg);color:var(--amber-text)}
+.btn-export-keep{background:var(--green-bg);color:var(--green-text)}
+.btn-export-watch{background:var(--cyan-bg);color:var(--cyan-text)}
+.btn-export-action:hover{filter:brightness(.95)}
+
+/* Health score */
+.health-bar-wrap{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:16px 20px;box-shadow:var(--shadow);display:flex;align-items:center;gap:24px}
+.health-score-ring{flex-shrink:0;width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;font-family:'DM Mono',monospace;border:5px solid}
+.health-score-ring.h-good{border-color:var(--green);color:var(--green)}
+.health-score-ring.h-warn{border-color:var(--amber);color:var(--amber)}
+.health-score-ring.h-bad{border-color:var(--red);color:var(--red)}
+.health-details{flex:1}
+.health-title{font-size:15px;font-weight:600;margin-bottom:4px}
+.health-sub{font-size:12px;color:var(--mid)}
+.health-tips{margin-top:10px;display:flex;flex-direction:column;gap:4px}
+.health-tip{font-size:12px;padding:4px 8px;border-radius:var(--radius);background:var(--bg)}
+.health-tip.tip-good{color:var(--green-text);background:var(--green-bg)}
+.health-tip.tip-warn{color:var(--amber-text);background:var(--amber-bg)}
+.health-tip.tip-bad{color:var(--red-text);background:var(--red-bg)}
 
 /* Filters */
 .filters{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:12px}
@@ -93,8 +132,8 @@ a{color:var(--blue)}
 .btn-dl:hover{background:var(--teal-light);color:var(--teal)}
 
 /* Table */
-.table-wrap{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);overflow:auto;box-shadow:var(--shadow);max-height:520px}
-table{width:100%;border-collapse:collapse;font-size:12px;min-width:900px}
+.table-wrap{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);overflow:auto;box-shadow:var(--shadow);max-height:560px}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:1100px}
 thead{position:sticky;top:0;z-index:5}
 th{background:var(--teal);color:var(--white);padding:10px 12px;text-align:left;font-weight:500;font-size:11px;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;user-select:none;white-space:nowrap}
 th:hover{background:var(--teal-light);color:var(--teal)}
@@ -104,7 +143,7 @@ td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle;
 tr:hover td{background:#f8fafd}
 tr:last-child td{border-bottom:none}
 td.mono{font-family:'DM Mono',monospace;font-size:11px}
-td.email{font-family:'DM Mono',monospace;font-size:12px;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+td.email{font-family:'DM Mono',monospace;font-size:12px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .camp-badge{display:inline-flex;align-items:center;justify-content:center;width:26px;height:20px;background:var(--blue-light);color:var(--blue);border-radius:4px;font-size:11px;font-weight:600;font-family:'DM Mono',monospace}
 .status-badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
 .s-clicked{background:var(--green-bg);color:var(--green-text)}
@@ -114,16 +153,22 @@ td.email{font-family:'DM Mono',monospace;font-size:12px;max-width:240px;overflow
 .s-hard{background:var(--red-bg);color:var(--red-text)}
 .s-soft{background:var(--amber-bg);color:var(--amber-text)}
 .s-pending{background:var(--orange-bg);color:var(--orange-text)}
-.reason-cell{max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:11px;font-family:'DM Mono',monospace;cursor:help}
+
+/* Action badges */
+.action-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;cursor:help}
+.ab-remove{background:var(--red-bg);color:var(--red-text)}
+.ab-retry{background:var(--amber-bg);color:var(--amber-text)}
+.ab-keep{background:var(--green-bg);color:var(--green-text)}
+.ab-watch{background:var(--cyan-bg);color:var(--cyan-text)}
+
+/* Fix tip cell */
+.fix-cell{max-width:220px;font-size:11px;color:var(--mid);font-family:'DM Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:help}
+.reason-cell{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:11px;font-family:'DM Mono',monospace;cursor:help}
 td.ip{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
 
-/* Hidden */
 .hidden{display:none}
-
-/* Note box */
 .note{background:var(--amber-bg);border-left:3px solid var(--amber);border-radius:0 var(--radius) var(--radius) 0;padding:10px 14px;font-size:12px;color:var(--amber-text);margin-top:12px}
 
-/* Responsive */
 @media(max-width:700px){.kpi-row{grid-template-columns:1fr 1fr}.main{padding:12px}}
 </style>
 </head>
@@ -140,29 +185,37 @@ td.ip{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
 
 <div class="main">
 
-  <!-- Upload Zone -->
   <div class="upload-zone" id="upload-zone" ondragover="onDrag(event,true)" ondragleave="onDrag(event,false)" ondrop="onDrop(event)">
     <input type="file" id="file-input" accept=".csv" multiple onchange="onFiles(this.files)">
     <div class="upload-icon">&#8679;</div>
     <div class="upload-title">Drop campaign CSV files here</div>
     <div class="upload-sub">Or click anywhere in this box to browse &mdash; supports multiple files at once</div>
-    <div class="upload-badge">&#x2714;&nbsp; Semicolon-delimited &nbsp;|&nbsp; Any number of campaigns &nbsp;|&nbsp; Auto-classified</div>
+    <div class="upload-badge">&#x2714;&nbsp; Semicolon-delimited &nbsp;|&nbsp; Any number of campaigns &nbsp;|&nbsp; Smart AI recommendations included</div>
     <div class="file-chips" id="file-chips"></div>
   </div>
 
-  <!-- Dashboard (hidden until data loaded) -->
   <div id="dashboard" class="hidden">
 
     <div class="section">
       <div class="section-head">Campaign Comparison</div>
       <div class="cards-scroll" id="camp-cards"></div>
       <div class="note" id="seed-note">
-        &#9432;&nbsp; <strong>List type</strong> is set to <em>Prospect</em> by default. If a campaign is a seed/internal test send, its open and click rates will skew combined figures. Use the filter below to view each campaign separately.
+        &#9432;&nbsp; <strong>List type</strong> is set to <em>Prospect</em> by default. If a campaign is a seed/internal test send, its open and click rates will skew combined figures.
       </div>
     </div>
 
     <div class="section">
-      <div class="section-head">Status breakdown &mdash; all campaigns</div>
+      <div class="section-head">List Health Score</div>
+      <div class="health-bar-wrap" id="health-wrap"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">Smart Recommendations &mdash; Next Campaign Actions</div>
+      <div class="action-grid" id="action-grid"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">Status Breakdown &mdash; All Campaigns</div>
       <div class="status-chart-wrap">
         <div class="stacked-bar" id="stacked-bar"></div>
         <div class="legend" id="legend"></div>
@@ -170,7 +223,7 @@ td.ip{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
     </div>
 
     <div class="section">
-      <div class="section-head">Recipient detail</div>
+      <div class="section-head">Recipient Detail</div>
       <div class="filters">
         <select id="f-camp" onchange="applyFilters()">
           <option value="">All campaigns</option>
@@ -185,7 +238,14 @@ td.ip{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
           <option>Soft Bounce</option>
           <option>Sent - Pending</option>
         </select>
-        <input type="text" id="f-search" placeholder="Search email or bounce reason..." oninput="applyFilters()">
+        <select id="f-action" onchange="applyFilters()">
+          <option value="">All actions</option>
+          <option value="keep">Keep</option>
+          <option value="watch">Watch</option>
+          <option value="retry">Retry</option>
+          <option value="remove">Remove</option>
+        </select>
+        <input type="text" id="f-search" placeholder="Search email, bounce reason or fix tip..." oninput="applyFilters()">
         <span class="filters-count" id="row-count"></span>
         <button class="btn-dl" onclick="downloadCSV()">&#8595; Download CSV</button>
       </div>
@@ -196,20 +256,21 @@ td.ip{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
               <th onclick="sortBy('campaignId')">C#</th>
               <th onclick="sortBy('email')">Email</th>
               <th onclick="sortBy('status')">Status</th>
+              <th onclick="sortBy('action')">Action</th>
+              <th onclick="sortBy('actionReason')">Reason</th>
+              <th onclick="sortBy('fixTip')">Fix / Tip</th>
               <th onclick="sortBy('deliveredDate')">Delivered</th>
-              <th onclick="sortBy('openDate')">Open date</th>
-              <th onclick="sortBy('openIP')">Open IP</th>
+              <th onclick="sortBy('openDate')">Open Date</th>
               <th onclick="sortBy('clicks')">Clicks</th>
-              <th onclick="sortBy('clickIP')">Click IP</th>
-              <th onclick="sortBy('bounceReason')">Bounce reason</th>
+              <th onclick="sortBy('bounceReason')">Bounce Reason</th>
             </tr>
           </thead>
           <tbody id="tbl-body"></tbody>
         </table>
       </div>
     </div>
-  </div>
 
+  </div>
 </div>
 
 <script>
@@ -226,6 +287,9 @@ const STATUS_HEX={
   'Soft Bounce':'#e6a817','Sent - Pending':'#d05a00'
 };
 const STATUS_ORDER=['Clicked','Opened','Opened (Apple MPP)','Delivered - No Open','Soft Bounce','Hard Bounce','Sent - Pending'];
+
+const ACTION_ICONS={keep:'✓',watch:'◎',retry:'↺',remove:'✕'};
+const ACTION_LABELS={keep:'Keep',watch:'Watch',retry:'Retry',remove:'Remove'};
 
 function g(row,i){return (row[i]||'').trim();}
 
@@ -256,6 +320,47 @@ function classifyRow(row){
   return{status:'Delivered - No Open',bounceType:'',bounceReason:'',deliveredDate:delivered,clickDate:''};
 }
 
+function getRecommendation(rec){
+  const s=rec.status, rl=(rec.bounceReason||'').toLowerCase();
+  if(s==='Clicked')
+    return{action:'keep',actionReason:'Engaged — clicked a link',fixTip:'Priority contact for next campaign'};
+  if(s==='Opened')
+    return{action:'keep',actionReason:'Engaged — opened email',fixTip:'Include in next campaign'};
+  if(s==='Opened (Apple MPP)')
+    return{action:'watch',actionReason:'Apple auto-open — real engagement unconfirmed',fixTip:'Send follow-up with strong CTA to confirm interest'};
+  if(s==='Delivered - No Open')
+    return{action:'watch',actionReason:'Delivered but no engagement',fixTip:'Try a different subject line or send time'};
+  if(s==='Sent - Pending')
+    return{action:'retry',actionReason:'Not yet delivered — may still arrive',fixTip:'Wait 24–48h; check again before excluding'};
+  if(s==='Hard Bounce'){
+    if(rl.includes('unable to find mx')||rl.includes('mx of domain'))
+      return{action:'remove',actionReason:'Domain has no mail server — likely dead or misspelled',fixTip:'Verify domain spelling; if dead, remove permanently'};
+    if(rl.includes('5.1.1')||rl.includes('user unknown')||rl.includes('virtual mailbox')||rl.includes('does not exist'))
+      return{action:'remove',actionReason:'Email address does not exist on this domain',fixTip:'Remove permanently — address is invalid'};
+    if(rl.includes('overquotaperm')||rl.includes('5.2.2')||rl.includes('inactive'))
+      return{action:'remove',actionReason:'Inbox permanently full / account abandoned',fixTip:'Remove permanently — account is inactive'};
+    if(rl.includes('relay access denied')||rl.includes('5.7.1')||rl.includes('smtp authentication')||rl.includes('not permitted'))
+      return{action:'remove',actionReason:'Server blocks third-party senders for this domain',fixTip:'Remove from list; try LinkedIn or phone outreach instead'};
+    if(rl.includes('552')||rl.includes('550'))
+      return{action:'remove',actionReason:'Permanent SMTP rejection (5xx error)',fixTip:'Remove from all future campaigns'};
+    return{action:'remove',actionReason:'Permanent delivery failure',fixTip:'Remove from all future campaigns'};
+  }
+  if(s==='Soft Bounce'){
+    if(rl.includes('connection timeout'))
+      return{action:'retry',actionReason:'Receiving server temporarily unreachable',fixTip:'Retry in next campaign — likely a temporary server issue'};
+    if(rl.includes('jfe030050')||rl.includes('unverified address'))
+      return{action:'retry',actionReason:'Mailbox may be disabled or temporarily unavailable',fixTip:'Retry once in 2–4 weeks; remove if it bounces again'};
+    if(rl.includes('4.1.1'))
+      return{action:'retry',actionReason:'Mailbox potentially unavailable — soft rejection',fixTip:'Retry after 2 weeks; remove after 2 consecutive soft bounces'};
+    if(rl.includes('message delivery failed'))
+      return{action:'retry',actionReason:'Temporary delivery failure — server gave no specific reason',fixTip:'Retry in next campaign; remove after 2 failures'};
+    if(rl.includes('overquota')&&!rl.includes('perm'))
+      return{action:'retry',actionReason:'Inbox temporarily full',fixTip:'Retry in 2–4 weeks — inbox may clear'};
+    return{action:'retry',actionReason:'Temporary delivery issue',fixTip:'Retry in next campaign; monitor for repeat bounces'};
+  }
+  return{action:'watch',actionReason:'Unknown status',fixTip:'Review manually'};
+}
+
 function parseCSV(text){
   text=text.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
   return text.split('\n').filter(l=>l.trim()).map(l=>l.split(';').map(c=>c.trim()));
@@ -266,7 +371,7 @@ function processText(text,filename){
   if(rows.length<2)return[];
   return rows.slice(1).filter(r=>r.length>3&&r[2]).map(r=>{
     const cls=classifyRow(r);
-    return{
+    const base={
       campaignId:g(r,0)||'?', campaignName:g(r,1),
       email:g(r,2), sendDate:g(r,3),
       deliveredDate:cls.deliveredDate||(cls.status.includes('Bounce')?'':g(r,4)),
@@ -277,6 +382,8 @@ function processText(text,filename){
       unsubDate:g(r,8), complaintDate:g(r,17),
       listType:'Prospect', source:filename
     };
+    const rec=getRecommendation(base);
+    return{...base,...rec};
   });
 }
 
@@ -301,7 +408,7 @@ async function onFiles(files){
   if(allRecords.length){
     document.getElementById('dashboard').classList.remove('hidden');
     document.getElementById('btn-clear').classList.remove('hidden');
-    populateCampFilter(); renderCards(); renderChart(); applyFilters();
+    populateCampFilter(); renderCards(); renderHealth(); renderActionGrid(); renderChart(); applyFilters();
   }
 }
 
@@ -310,14 +417,10 @@ function onDrop(e){e.preventDefault();onDrag(e,false);onFiles(e.dataTransfer.fil
 
 function clearAll(){
   allRecords=[];filtered=[];sortCol='';sortDir=1;
-  document.getElementById('dashboard').classList.add('hidden');
-  document.getElementById('btn-clear').classList.add('hidden');
-  document.getElementById('file-chips').innerHTML='';
+  ['dashboard','btn-clear'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+  ['file-chips','tbl-body','camp-cards','stacked-bar','legend','action-grid','health-wrap']
+    .forEach(id=>document.getElementById(id).innerHTML='');
   document.getElementById('file-input').value='';
-  document.getElementById('tbl-body').innerHTML='';
-  document.getElementById('camp-cards').innerHTML='';
-  document.getElementById('stacked-bar').innerHTML='';
-  document.getElementById('legend').innerHTML='';
   document.getElementById('f-camp').innerHTML='<option value="">All campaigns</option>';
 }
 
@@ -369,11 +472,11 @@ function renderCards(){
       <div class="rate-row">
         <div class="rate-item">
           <div class="rate-val ${rateClass(m.deliveryRate,.97,.85)}">${pct(m.deliveryRate)}</div>
-          <div class="rate-lbl">Delivery rate</div>
+          <div class="rate-lbl">Delivery</div>
         </div>
         <div class="rate-item">
           <div class="rate-val ${m.bounceRate>0.05?'rate-bad':m.bounceRate>0.02?'rate-warn':'rate-ok'}">${pct(m.bounceRate)}</div>
-          <div class="rate-lbl">Bounce rate</div>
+          <div class="rate-lbl">Bounce</div>
         </div>
         <div class="rate-item">
           <div class="rate-val ${rateClass(m.openRate,.25,.1)}">${pct(m.openRate)}</div>
@@ -396,6 +499,95 @@ function renderCards(){
     render1(recs,'Campaign '+cid,name,false);
   });
   if(camps.length>1) render1(allRecords,'Combined &#x2211;','All '+camps.length+' campaigns',true);
+}
+
+function renderHealth(){
+  const m=getMetrics(allRecords);
+  const hardRate=m.hardRate*100;
+  const bounceRate=m.bounceRate*100;
+  // score: start at 100, penalise bounces heavily
+  let score=100;
+  score-=hardRate*4;    // each 1% hard = -4pts
+  score-=(bounceRate-hardRate)*1.5; // soft bounce penalty
+  if(m.openRate<0.1) score-=10;
+  if(m.openRate<0.05) score-=10;
+  score=Math.max(0,Math.min(100,Math.round(score)));
+  const grade=score>=80?'Good':score>=55?'Fair':'Poor';
+  const cls=score>=80?'h-good':score>=55?'h-warn':'h-bad';
+
+  const tips=[];
+  if(hardRate>5) tips.push({t:'bad',msg:`Hard bounce rate ${hardRate.toFixed(1)}% is critical (>5%). Clean this list before next send.`});
+  else if(hardRate>2) tips.push({t:'warn',msg:`Hard bounce rate ${hardRate.toFixed(1)}% is elevated. Remove all Hard Bounce emails now.`});
+  else tips.push({t:'good',msg:`Hard bounce rate ${hardRate.toFixed(1)}% is healthy.`});
+
+  if(bounceRate-hardRate>3) tips.push({t:'warn',msg:`Soft bounce rate ${((bounceRate-hardRate)).toFixed(1)}% is high. Retry once then remove persistent soft bouncers.`});
+  if(m.openRate<0.1) tips.push({t:'warn',msg:`Open rate ${pct(m.openRate)} is low. Test subject lines and send times.`});
+  if(m.openRate>=0.2) tips.push({t:'good',msg:`Open rate ${pct(m.openRate)} is strong. Engaged list.`});
+  if(m.ctr>=0.03) tips.push({t:'good',msg:`CTR ${pct(m.ctr)} is excellent. Content resonates.`});
+
+  const wrap=document.getElementById('health-wrap');
+  wrap.innerHTML=`
+    <div class="health-score-ring ${cls}">${score}</div>
+    <div class="health-details">
+      <div class="health-title">List Health: <strong>${grade}</strong> &nbsp;(Score ${score}/100)</div>
+      <div class="health-sub">Based on bounce rates, delivery, and engagement from ${allRecords.length} recipients</div>
+      <div class="health-tips">
+        ${tips.map(t=>`<div class="health-tip tip-${t.t}">${t.msg}</div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function renderActionGrid(){
+  const groups={
+    keep:{label:'Keep — Include Next Time',cls:'ac-keep',btnCls:'btn-export-keep',desc:'These contacts engaged or were successfully delivered. Prioritise them in your next campaign.',icon:'✓'},
+    watch:{label:'Watch — Monitor Engagement',cls:'ac-watch',btnCls:'btn-export-watch',desc:'Delivered but no confirmed human engagement. Include with adjusted subject lines and different send times.',icon:'◎'},
+    retry:{label:'Retry — Temporary Issue',cls:'ac-retry',btnCls:'btn-export-retry',desc:'Soft bounces or pending sends — temporary failures. Retry in your next campaign but watch for repeats.',icon:'↺'},
+    remove:{label:'Remove — Do Not Send',cls:'ac-remove',btnCls:'btn-export-remove',desc:'Hard bounces and permanently invalid addresses. Remove these now to protect sender reputation.',icon:'✕'},
+  };
+
+  const el=document.getElementById('action-grid');
+  el.innerHTML='';
+
+  Object.entries(groups).forEach(([action,cfg])=>{
+    const recs=allRecords.filter(r=>r.action===action);
+    if(!recs.length)return;
+
+    // group by reason
+    const reasonMap={};
+    recs.forEach(r=>{
+      const k=r.actionReason||'Unknown';
+      reasonMap[k]=(reasonMap[k]||0)+1;
+    });
+    const topReasons=Object.entries(reasonMap).sort((a,b)=>b[1]-a[1]).slice(0,5);
+
+    const card=document.createElement('div');
+    card.className=`action-card ${cfg.cls}`;
+    card.innerHTML=`
+      <div class="ac-head">
+        <div class="ac-title">${cfg.icon} ${cfg.label}</div>
+        <div class="ac-count">${recs.length}</div>
+      </div>
+      <div class="ac-desc">${cfg.desc}</div>
+      <div class="ac-reasons">
+        ${topReasons.map(([r,n])=>`<div class="ac-reason-row"><span class="ac-reason-label">${r}</span><span class="ac-reason-count">${n}</span></div>`).join('')}
+      </div>
+      <button class="btn-export-action ${cfg.btnCls}" onclick="exportAction('${action}')">&#8595; Export ${ACTION_LABELS[action]} List (${recs.length})</button>`;
+    el.appendChild(card);
+  });
+}
+
+function exportAction(action){
+  const recs=allRecords.filter(r=>r.action===action);
+  const heads=['Email','Campaign ID','Campaign Name','Status','Action','Reason','Fix / Tip','Bounce Reason','Delivered Date','Open Date','Clicks','Source File'];
+  const esc=v=>`"${String(v||'').replace(/"/g,'""')}"`;
+  const rows=[heads.map(esc).join(','),...recs.map(r=>
+    [r.email,r.campaignId,r.campaignName,r.status,r.action,r.actionReason,r.fixTip,r.bounceReason,r.deliveredDate,r.openDate,r.clicks,r.source]
+    .map(esc).join(','))];
+  const blob=new Blob([rows.join('\r\n')],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`campaign_${action}_list_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
 }
 
 function renderChart(){
@@ -436,11 +628,16 @@ function populateCampFilter(){
 function applyFilters(){
   const fc=document.getElementById('f-camp').value;
   const fs=document.getElementById('f-status').value;
+  const fa=document.getElementById('f-action').value;
   const fq=document.getElementById('f-search').value.toLowerCase();
   filtered=allRecords.filter(r=>{
     if(fc&&r.campaignId!==fc)return false;
     if(fs&&r.status!==fs)return false;
-    if(fq&&!r.email.toLowerCase().includes(fq)&&!r.bounceReason.toLowerCase().includes(fq))return false;
+    if(fa&&r.action!==fa)return false;
+    if(fq&&!r.email.toLowerCase().includes(fq)
+      &&!r.bounceReason.toLowerCase().includes(fq)
+      &&!(r.fixTip||'').toLowerCase().includes(fq)
+      &&!(r.actionReason||'').toLowerCase().includes(fq))return false;
     return true;
   });
   if(sortCol)doSort();
@@ -451,7 +648,7 @@ function sortBy(col){
   if(sortCol===col){sortDir*=-1;}else{sortCol=col;sortDir=1;}
   document.querySelectorAll('th').forEach(th=>{th.classList.remove('sorted-asc','sorted-desc');});
   const ths=document.querySelectorAll('th');
-  const map=['campaignId','email','status','deliveredDate','openDate','openIP','clicks','clickIP','bounceReason'];
+  const map=['campaignId','email','status','action','actionReason','fixTip','deliveredDate','openDate','clicks','bounceReason'];
   const idx=map.indexOf(col);
   if(idx>=0){ths[idx].classList.add(sortDir===1?'sorted-asc':'sorted-desc');}
   doSort(); renderTable();
@@ -463,6 +660,11 @@ function doSort(){
     if(sortCol==='clicks'){va=+va;vb=+vb;}
     if(va<vb)return -1*sortDir; if(va>vb)return sortDir; return 0;
   });
+}
+
+function actionBadge(a){
+  const cls={keep:'ab-keep',watch:'ab-watch',retry:'ab-retry',remove:'ab-remove'}[a]||'ab-watch';
+  return`<span class="action-badge ${cls}">${ACTION_ICONS[a]||''} ${ACTION_LABELS[a]||a}</span>`;
 }
 
 function statusBadge(s){
@@ -480,29 +682,32 @@ function renderTable(){
       <td><span class="camp-badge">${r.campaignId}</span></td>
       <td class="email" title="${r.email}">${r.email}</td>
       <td>${statusBadge(r.status)}</td>
+      <td>${actionBadge(r.action)}</td>
+      <td class="reason-cell" title="${r.actionReason||''}">${r.actionReason||'&mdash;'}</td>
+      <td class="fix-cell" title="${r.fixTip||''}">${r.fixTip||'&mdash;'}</td>
       <td class="mono">${r.deliveredDate||'&mdash;'}</td>
       <td class="mono">${r.openDate||'&mdash;'}</td>
-      <td class="ip">${r.openIP||'&mdash;'}</td>
       <td class="mono" style="text-align:center">${r.clicks||0}</td>
-      <td class="ip">${r.clickIP||'&mdash;'}</td>
       <td class="reason-cell" title="${r.bounceReason||''}">${r.bounceReason||'&mdash;'}</td>`;
     tbody.appendChild(tr);
   });
   if(!filtered.length){
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td colspan="9" style="text-align:center;padding:32px;color:var(--muted)">No records match the current filters</td>`;
+    tr.innerHTML=`<td colspan="10" style="text-align:center;padding:32px;color:var(--muted)">No records match the current filters</td>`;
     tbody.appendChild(tr);
   }
 }
 
 function downloadCSV(){
   const heads=['Campaign ID','Campaign Name','Email','Send Date','Delivered Date','Status',
-    'Bounce Type','Bounce Reason','Total Opens','Apple MPP Opens','Open Date','Open IP',
+    'Action','Action Reason','Fix Tip','Bounce Type','Bounce Reason',
+    'Total Opens','Apple MPP Opens','Open Date','Open IP',
     'Clicks','Click IP','Click Date','Unsubscribe Date','Complaint Date','List Type','Source File'];
   const esc=v=>`"${String(v||'').replace(/"/g,'""')}"`;
   const rows=[heads.map(esc).join(','),...filtered.map(r=>
     [r.campaignId,r.campaignName,r.email,r.sendDate,r.deliveredDate,r.status,
-     r.bounceType,r.bounceReason,r.totalOpens,r.appleMPP,r.openDate,r.openIP,
+     r.action,r.actionReason,r.fixTip,r.bounceType,r.bounceReason,
+     r.totalOpens,r.appleMPP,r.openDate,r.openIP,
      r.clicks,r.clickIP,r.clickDate,r.unsubDate,r.complaintDate,r.listType,r.source]
     .map(esc).join(','))];
   const blob=new Blob([rows.join('\r\n')],{type:'text/csv'});

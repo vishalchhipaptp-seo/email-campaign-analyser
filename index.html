@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Campaign Analyser - Elite Information Tech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#0C59A5;--blue-light:#e8f1fb;--blue-dark:#083d73;
+  --teal:#0F4C4C;--teal-light:#eaf1f1;
+  --dark:#212529;--mid:#495057;--muted:#868e96;--border:#dee2e6;--bg:#f8f9fa;--white:#fff;
+  --green:#198754;--green-bg:#d1e7dd;--green-text:#0a3622;
+  --red:#dc3545;--red-bg:#f8d7da;--red-text:#58151c;
+  --amber:#e6a817;--amber-bg:#fff3cd;--amber-text:#664d03;
+  --purple:#6f42c1;--purple-bg:#e8d8fa;--purple-text:#3d1e7a;
+  --grey-bg:#e9ecef;--grey-text:#343a40;
+  --orange:#d05a00;--orange-bg:#fde8d4;--orange-text:#6b2d00;
+  --shadow:0 1px 4px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.05);
+  --radius:8px;--radius-lg:12px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);font-size:14px;line-height:1.5;min-height:100vh}
+a{color:var(--blue)}
+
+/* Header */
+.header{background:var(--blue);color:var(--white);padding:0 24px;height:56px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.header-logo{font-size:13px;font-weight:600;letter-spacing:.5px;opacity:.85}
+.header-title{font-size:15px;font-weight:600;flex:1}
+.header-sub{font-size:11px;opacity:.65;font-family:'DM Mono',monospace}
+.btn-clear{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--white);padding:6px 14px;border-radius:var(--radius);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s}
+.btn-clear:hover{background:rgba(255,255,255,.22)}
+
+/* Main layout */
+.main{max-width:1400px;margin:0 auto;padding:24px 20px}
+
+/* Upload zone */
+.upload-zone{border:2px dashed var(--border);border-radius:var(--radius-lg);background:var(--white);padding:60px 40px;text-align:center;cursor:pointer;transition:all .2s;position:relative}
+.upload-zone.drag-over{border-color:var(--blue);background:var(--blue-light)}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-icon{font-size:48px;margin-bottom:16px;opacity:.25}
+.upload-title{font-size:18px;font-weight:600;color:var(--dark);margin-bottom:8px}
+.upload-sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+.upload-badge{display:inline-flex;align-items:center;gap:6px;background:var(--blue-light);color:var(--blue);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:500;margin-top:4px}
+.file-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;justify-content:center}
+.file-chip{background:var(--teal-light);color:var(--teal);border-radius:20px;padding:4px 12px;font-size:12px;font-family:'DM Mono',monospace}
+
+/* Section headings */
+.section{margin-top:28px}
+.section-head{font-size:13px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--teal);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--teal-light)}
+
+/* Campaign cards grid */
+.cards-scroll{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.camp-card{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:16px;box-shadow:var(--shadow)}
+.camp-card.combined{border-color:var(--teal);background:var(--teal-light)}
+.camp-card-head{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.camp-card-name{font-size:12px;color:var(--mid);margin-bottom:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.kpi{text-align:center;padding:8px 4px;background:var(--bg);border-radius:var(--radius)}
+.kpi-val{font-size:20px;font-weight:600;font-family:'DM Mono',monospace;color:var(--blue);line-height:1}
+.kpi-lbl{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.4px}
+.rate-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.rate-item{display:flex;flex-direction:column;align-items:center;padding:6px 2px}
+.rate-val{font-size:14px;font-weight:600;font-family:'DM Mono',monospace}
+.rate-lbl{font-size:10px;color:var(--muted);text-align:center}
+.rate-bad{color:var(--red)}
+.rate-warn{color:var(--amber)}
+.rate-ok{color:var(--green)}
+.rate-neutral{color:var(--mid)}
+.divider{height:1px;background:var(--border);margin:10px 0}
+.bounce-row{display:flex;gap:8px;margin-top:8px}
+.b-pill{flex:1;text-align:center;border-radius:var(--radius);padding:5px 4px;font-size:11px;font-weight:500}
+.b-hard{background:var(--red-bg);color:var(--red-text)}
+.b-soft{background:var(--amber-bg);color:var(--amber-text)}
+
+/* Status breakdown chart */
+.status-chart-wrap{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:16px;box-shadow:var(--shadow)}
+.stacked-bar{height:28px;border-radius:var(--radius);overflow:hidden;display:flex;margin-bottom:12px}
+.stacked-seg{height:100%;transition:width .4s ease;position:relative;cursor:default}
+.stacked-seg:hover::after{content:attr(data-tip);position:absolute;top:-32px;left:50%;transform:translateX(-50%);background:var(--dark);color:var(--white);padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mid)}
+.legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+
+/* Filters */
+.filters{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:12px}
+.filters select,.filters input{border:1px solid var(--border);border-radius:var(--radius);padding:7px 10px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--white);color:var(--dark);outline:none}
+.filters select:focus,.filters input:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(12,89,165,.15)}
+.filters input{flex:1;min-width:200px}
+.filters-count{margin-left:auto;font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
+.btn-dl{background:var(--teal);color:var(--white);border:none;border-radius:var(--radius);padding:7px 16px;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;gap:6px}
+.btn-dl:hover{background:var(--teal-light);color:var(--teal)}
+
+/* Table */
+.table-wrap{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);overflow:auto;box-shadow:var(--shadow);max-height:520px}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:900px}
+thead{position:sticky;top:0;z-index:5}
+th{background:var(--teal);color:var(--white);padding:10px 12px;text-align:left;font-weight:500;font-size:11px;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;user-select:none;white-space:nowrap}
+th:hover{background:var(--teal-light);color:var(--teal)}
+th.sorted-asc::after{content:' ▲'}
+th.sorted-desc::after{content:' ▼'}
+td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--dark)}
+tr:hover td{background:#f8fafd}
+tr:last-child td{border-bottom:none}
+td.mono{font-family:'DM Mono',monospace;font-size:11px}
+td.email{font-family:'DM Mono',monospace;font-size:12px;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.camp-badge{display:inline-flex;align-items:center;justify-content:center;width:26px;height:20px;background:var(--blue-light);color:var(--blue);border-radius:4px;font-size:11px;font-weight:600;font-family:'DM Mono',monospace}
+.status-badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:500;white-space:nowrap}
+.s-clicked{background:var(--green-bg);color:var(--green-text)}
+.s-opened{background:#d1fae5;color:#065f46}
+.s-mpp{background:var(--purple-bg);color:var(--purple-text)}
+.s-noopen{background:var(--grey-bg);color:var(--grey-text)}
+.s-hard{background:var(--red-bg);color:var(--red-text)}
+.s-soft{background:var(--amber-bg);color:var(--amber-text)}
+.s-pending{background:var(--orange-bg);color:var(--orange-text)}
+.reason-cell{max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:11px;font-family:'DM Mono',monospace;cursor:help}
+td.ip{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
+
+/* Hidden */
+.hidden{display:none}
+
+/* Note box */
+.note{background:var(--amber-bg);border-left:3px solid var(--amber);border-radius:0 var(--radius) var(--radius) 0;padding:10px 14px;font-size:12px;color:var(--amber-text);margin-top:12px}
+
+/* Responsive */
+@media(max-width:700px){.kpi-row{grid-template-columns:1fr 1fr}.main{padding:12px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-logo">ELITE INFORMATION TECH</div>
+    <div class="header-sub">campaign analytics</div>
+  </div>
+  <div class="header-title">Email Campaign Analyser</div>
+  <button class="btn-clear hidden" id="btn-clear" onclick="clearAll()">&#x2715; Clear</button>
+</div>
+
+<div class="main">
+
+  <!-- Upload Zone -->
+  <div class="upload-zone" id="upload-zone" ondragover="onDrag(event,true)" ondragleave="onDrag(event,false)" ondrop="onDrop(event)">
+    <input type="file" id="file-input" accept=".csv" multiple onchange="onFiles(this.files)">
+    <div class="upload-icon">&#8679;</div>
+    <div class="upload-title">Drop campaign CSV files here</div>
+    <div class="upload-sub">Or click anywhere in this box to browse &mdash; supports multiple files at once</div>
+    <div class="upload-badge">&#x2714;&nbsp; Semicolon-delimited &nbsp;|&nbsp; Any number of campaigns &nbsp;|&nbsp; Auto-classified</div>
+    <div class="file-chips" id="file-chips"></div>
+  </div>
+
+  <!-- Dashboard (hidden until data loaded) -->
+  <div id="dashboard" class="hidden">
+
+    <div class="section">
+      <div class="section-head">Campaign Comparison</div>
+      <div class="cards-scroll" id="camp-cards"></div>
+      <div class="note" id="seed-note">
+        &#9432;&nbsp; <strong>List type</strong> is set to <em>Prospect</em> by default. If a campaign is a seed/internal test send, its open and click rates will skew combined figures. Use the filter below to view each campaign separately.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">Status breakdown &mdash; all campaigns</div>
+      <div class="status-chart-wrap">
+        <div class="stacked-bar" id="stacked-bar"></div>
+        <div class="legend" id="legend"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">Recipient detail</div>
+      <div class="filters">
+        <select id="f-camp" onchange="applyFilters()">
+          <option value="">All campaigns</option>
+        </select>
+        <select id="f-status" onchange="applyFilters()">
+          <option value="">All statuses</option>
+          <option>Clicked</option>
+          <option>Opened</option>
+          <option>Opened (Apple MPP)</option>
+          <option>Delivered - No Open</option>
+          <option>Hard Bounce</option>
+          <option>Soft Bounce</option>
+          <option>Sent - Pending</option>
+        </select>
+        <input type="text" id="f-search" placeholder="Search email or bounce reason..." oninput="applyFilters()">
+        <span class="filters-count" id="row-count"></span>
+        <button class="btn-dl" onclick="downloadCSV()">&#8595; Download CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th onclick="sortBy('campaignId')">C#</th>
+              <th onclick="sortBy('email')">Email</th>
+              <th onclick="sortBy('status')">Status</th>
+              <th onclick="sortBy('deliveredDate')">Delivered</th>
+              <th onclick="sortBy('openDate')">Open date</th>
+              <th onclick="sortBy('openIP')">Open IP</th>
+              <th onclick="sortBy('clicks')">Clicks</th>
+              <th onclick="sortBy('clickIP')">Click IP</th>
+              <th onclick="sortBy('bounceReason')">Bounce reason</th>
+            </tr>
+          </thead>
+          <tbody id="tbl-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let allRecords=[], filtered=[], sortCol='', sortDir=1;
+
+const STATUS_COLORS={
+  'Clicked':'s-clicked','Opened':'s-opened','Opened (Apple MPP)':'s-mpp',
+  'Delivered - No Open':'s-noopen','Hard Bounce':'s-hard',
+  'Soft Bounce':'s-soft','Sent - Pending':'s-pending'
+};
+const STATUS_HEX={
+  'Clicked':'#198754','Opened':'#10b981','Opened (Apple MPP)':'#7c3aed',
+  'Delivered - No Open':'#868e96','Hard Bounce':'#dc3545',
+  'Soft Bounce':'#e6a817','Sent - Pending':'#d05a00'
+};
+const STATUS_ORDER=['Clicked','Opened','Opened (Apple MPP)','Delivered - No Open','Soft Bounce','Hard Bounce','Sent - Pending'];
+
+function g(row,i){return (row[i]||'').trim();}
+
+function classifyRow(row){
+  const delivered=g(row,4),opens=parseInt(g(row,6))||0,mpp=parseInt(g(row,7))||0;
+  const openDate=g(row,5),openIP=g(row,13),clickIP=g(row,14),clicks=parseInt(g(row,16))||0;
+  const hbd=g(row,9),hbr=g(row,10),sbd=g(row,11),sbr=g(row,12);
+  const reason=(hbr||sbr).trim(), rl=reason.toLowerCase();
+  const clickDate=g(row,18)||g(row,19);
+  const PERM=['5.1.1','5.4.1','5.2.2','overquotaperm','does not exist','nosuchuser',
+    'unable to find mx','hard bounce','550 ','552 ','access denied'];
+  const TEMP=['450 4','4.1.1','connection timeout','jfe030050','unverified address'];
+  if(hbd||sbd||hbr||sbr){
+    const isTemp=TEMP.some(k=>rl.includes(k));
+    const isPerm=PERM.some(k=>rl.includes(k))&&!isTemp;
+    const btype=(isPerm||hbd)?'Hard':'Soft';
+    return{status:btype==='Hard'?'Hard Bounce':'Soft Bounce',bounceType:btype,
+      bounceReason:reason.split(/\s{2,}/)[0].substring(0,120),deliveredDate:'',clickDate:''};
+  }
+  if(!delivered&&!opens&&!clicks&&!clickIP&&!openDate)
+    return{status:'Sent - Pending',bounceType:'',bounceReason:'',deliveredDate:'',clickDate:''};
+  if(clicks>0||clickIP)
+    return{status:'Clicked',bounceType:'',bounceReason:'',deliveredDate:delivered,clickDate};
+  if(opens>0&&mpp>0&&!openDate)
+    return{status:'Opened (Apple MPP)',bounceType:'',bounceReason:'',deliveredDate:delivered,clickDate:''};
+  if(openDate||openIP)
+    return{status:'Opened',bounceType:'',bounceReason:'',deliveredDate:delivered,clickDate:''};
+  return{status:'Delivered - No Open',bounceType:'',bounceReason:'',deliveredDate:delivered,clickDate:''};
+}
+
+function parseCSV(text){
+  text=text.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+  return text.split('\n').filter(l=>l.trim()).map(l=>l.split(';').map(c=>c.trim()));
+}
+
+function processText(text,filename){
+  const rows=parseCSV(text);
+  if(rows.length<2)return[];
+  return rows.slice(1).filter(r=>r.length>3&&r[2]).map(r=>{
+    const cls=classifyRow(r);
+    return{
+      campaignId:g(r,0)||'?', campaignName:g(r,1),
+      email:g(r,2), sendDate:g(r,3),
+      deliveredDate:cls.deliveredDate||(cls.status.includes('Bounce')?'':g(r,4)),
+      status:cls.status, bounceType:cls.bounceType, bounceReason:cls.bounceReason,
+      totalOpens:parseInt(g(r,6))||0, appleMPP:parseInt(g(r,7))||0,
+      openDate:g(r,5), openIP:g(r,13),
+      clicks:parseInt(g(r,16))||0, clickIP:g(r,14), clickDate:cls.clickDate,
+      unsubDate:g(r,8), complaintDate:g(r,17),
+      listType:'Prospect', source:filename
+    };
+  });
+}
+
+function readFile(file){
+  return new Promise(res=>{
+    const fr=new FileReader();
+    fr.onload=e=>res(processText(e.target.result,file.name));
+    fr.readAsText(file,'utf-8');
+  });
+}
+
+async function onFiles(files){
+  const chips=document.getElementById('file-chips');
+  for(const f of files){
+    const recs=await readFile(f);
+    allRecords=[...allRecords,...recs];
+    const chip=document.createElement('span');
+    chip.className='file-chip';
+    chip.textContent=f.name+' ('+recs.length+' rows)';
+    chips.appendChild(chip);
+  }
+  if(allRecords.length){
+    document.getElementById('dashboard').classList.remove('hidden');
+    document.getElementById('btn-clear').classList.remove('hidden');
+    populateCampFilter(); renderCards(); renderChart(); applyFilters();
+  }
+}
+
+function onDrag(e,over){e.preventDefault();document.getElementById('upload-zone').classList.toggle('drag-over',over);}
+function onDrop(e){e.preventDefault();onDrag(e,false);onFiles(e.dataTransfer.files);}
+
+function clearAll(){
+  allRecords=[];filtered=[];sortCol='';sortDir=1;
+  document.getElementById('dashboard').classList.add('hidden');
+  document.getElementById('btn-clear').classList.add('hidden');
+  document.getElementById('file-chips').innerHTML='';
+  document.getElementById('file-input').value='';
+  document.getElementById('tbl-body').innerHTML='';
+  document.getElementById('camp-cards').innerHTML='';
+  document.getElementById('stacked-bar').innerHTML='';
+  document.getElementById('legend').innerHTML='';
+  document.getElementById('f-camp').innerHTML='<option value="">All campaigns</option>';
+}
+
+function getMetrics(recs){
+  const sent=recs.length;
+  const delivered=recs.filter(r=>r.deliveredDate).length;
+  const hardB=recs.filter(r=>r.status==='Hard Bounce').length;
+  const softB=recs.filter(r=>r.status==='Soft Bounce').length;
+  const humanOpen=recs.filter(r=>r.status==='Opened'||r.status==='Clicked').length;
+  const mppOpen=recs.filter(r=>r.status==='Opened (Apple MPP)').length;
+  const clickers=recs.filter(r=>r.status==='Clicked').length;
+  const unsub=recs.filter(r=>r.unsubDate).length;
+  const complaints=recs.filter(r=>r.complaintDate).length;
+  const totalOpens=recs.reduce((s,r)=>s+r.totalOpens,0);
+  return{sent,delivered,hardB,softB,humanOpen,mppOpen,clickers,unsub,complaints,totalOpens,
+    deliveryRate:delivered/Math.max(sent,1),
+    bounceRate:(hardB+softB)/Math.max(sent,1),
+    hardRate:hardB/Math.max(sent,1),
+    openRate:humanOpen/Math.max(delivered,1),
+    ctr:clickers/Math.max(delivered,1),
+    ctor:clickers/Math.max(humanOpen,1)};
+}
+
+function pct(v){return(v*100).toFixed(1)+'%';}
+function rateClass(v,green,warn){
+  if(v>=green)return'rate-ok'; if(v>=warn)return'rate-warn'; return'rate-bad';
+}
+
+function renderCards(){
+  const camps=[...new Set(allRecords.map(r=>r.campaignId))].sort();
+  const el=document.getElementById('camp-cards');
+  el.innerHTML='';
+  const render1=(recs,label,name,combined)=>{
+    const m=getMetrics(recs);
+    const card=document.createElement('div');
+    card.className='camp-card'+(combined?' combined':'');
+    card.innerHTML=`
+      <div class="camp-card-head">${label}</div>
+      <div class="camp-card-name" title="${name}">${name||'All campaigns'}</div>
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-val">${m.sent}</div><div class="kpi-lbl">Sent</div></div>
+        <div class="kpi"><div class="kpi-val">${m.delivered}</div><div class="kpi-lbl">Delivered</div></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-val">${m.humanOpen}</div><div class="kpi-lbl">Openers</div></div>
+        <div class="kpi"><div class="kpi-val">${m.clickers}</div><div class="kpi-lbl">Clickers</div></div>
+      </div>
+      <div class="divider"></div>
+      <div class="rate-row">
+        <div class="rate-item">
+          <div class="rate-val ${rateClass(m.deliveryRate,.97,.85)}">${pct(m.deliveryRate)}</div>
+          <div class="rate-lbl">Delivery rate</div>
+        </div>
+        <div class="rate-item">
+          <div class="rate-val ${m.bounceRate>0.05?'rate-bad':m.bounceRate>0.02?'rate-warn':'rate-ok'}">${pct(m.bounceRate)}</div>
+          <div class="rate-lbl">Bounce rate</div>
+        </div>
+        <div class="rate-item">
+          <div class="rate-val ${rateClass(m.openRate,.25,.1)}">${pct(m.openRate)}</div>
+          <div class="rate-lbl">Open rate</div>
+        </div>
+        <div class="rate-item">
+          <div class="rate-val ${rateClass(m.ctr,.03,.01)}">${pct(m.ctr)}</div>
+          <div class="rate-lbl">CTR</div>
+        </div>
+      </div>
+      <div class="bounce-row">
+        <div class="b-pill b-hard">Hard: ${m.hardB} (${pct(m.hardRate)})</div>
+        <div class="b-pill b-soft">Soft: ${m.softB}</div>
+      </div>`;
+    el.appendChild(card);
+  };
+  camps.forEach(cid=>{
+    const recs=allRecords.filter(r=>r.campaignId===cid);
+    const name=recs[0]?.campaignName||'Campaign '+cid;
+    render1(recs,'Campaign '+cid,name,false);
+  });
+  if(camps.length>1) render1(allRecords,'Combined &#x2211;','All '+camps.length+' campaigns',true);
+}
+
+function renderChart(){
+  const counts={};
+  STATUS_ORDER.forEach(s=>counts[s]=0);
+  allRecords.forEach(r=>{if(counts[r.status]!==undefined)counts[r.status]++;else counts[r.status]=1;});
+  const total=allRecords.length||1;
+  const bar=document.getElementById('stacked-bar');
+  const leg=document.getElementById('legend');
+  bar.innerHTML=''; leg.innerHTML='';
+  STATUS_ORDER.forEach(s=>{
+    const n=counts[s]||0; if(!n)return;
+    const pc=(n/total*100).toFixed(1);
+    const seg=document.createElement('div');
+    seg.className='stacked-seg';
+    seg.style.cssText=`width:${pc}%;background:${STATUS_HEX[s]};`;
+    seg.setAttribute('data-tip',s+': '+n+' ('+pc+'%)');
+    seg.title=s+': '+n+' ('+pc+'%)';
+    bar.appendChild(seg);
+    const li=document.createElement('div');
+    li.className='legend-item';
+    li.innerHTML=`<div class="legend-dot" style="background:${STATUS_HEX[s]}"></div>${s}: ${n} (${pc}%)`;
+    leg.appendChild(li);
+  });
+}
+
+function populateCampFilter(){
+  const sel=document.getElementById('f-camp');
+  const camps=[...new Set(allRecords.map(r=>r.campaignId))].sort();
+  sel.innerHTML='<option value="">All campaigns</option>';
+  camps.forEach(c=>{
+    const o=document.createElement('option');
+    o.value=c; o.textContent='Campaign '+c;
+    sel.appendChild(o);
+  });
+}
+
+function applyFilters(){
+  const fc=document.getElementById('f-camp').value;
+  const fs=document.getElementById('f-status').value;
+  const fq=document.getElementById('f-search').value.toLowerCase();
+  filtered=allRecords.filter(r=>{
+    if(fc&&r.campaignId!==fc)return false;
+    if(fs&&r.status!==fs)return false;
+    if(fq&&!r.email.toLowerCase().includes(fq)&&!r.bounceReason.toLowerCase().includes(fq))return false;
+    return true;
+  });
+  if(sortCol)doSort();
+  renderTable();
+}
+
+function sortBy(col){
+  if(sortCol===col){sortDir*=-1;}else{sortCol=col;sortDir=1;}
+  document.querySelectorAll('th').forEach(th=>{th.classList.remove('sorted-asc','sorted-desc');});
+  const ths=document.querySelectorAll('th');
+  const map=['campaignId','email','status','deliveredDate','openDate','openIP','clicks','clickIP','bounceReason'];
+  const idx=map.indexOf(col);
+  if(idx>=0){ths[idx].classList.add(sortDir===1?'sorted-asc':'sorted-desc');}
+  doSort(); renderTable();
+}
+
+function doSort(){
+  filtered=[...filtered].sort((a,b)=>{
+    let va=a[sortCol]??'',vb=b[sortCol]??'';
+    if(sortCol==='clicks'){va=+va;vb=+vb;}
+    if(va<vb)return -1*sortDir; if(va>vb)return sortDir; return 0;
+  });
+}
+
+function statusBadge(s){
+  const cls=STATUS_COLORS[s]||'s-noopen';
+  return`<span class="status-badge ${cls}">${s}</span>`;
+}
+
+function renderTable(){
+  const tbody=document.getElementById('tbl-body');
+  document.getElementById('row-count').textContent=filtered.length+' of '+allRecords.length+' rows';
+  tbody.innerHTML='';
+  filtered.forEach(r=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td><span class="camp-badge">${r.campaignId}</span></td>
+      <td class="email" title="${r.email}">${r.email}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td class="mono">${r.deliveredDate||'&mdash;'}</td>
+      <td class="mono">${r.openDate||'&mdash;'}</td>
+      <td class="ip">${r.openIP||'&mdash;'}</td>
+      <td class="mono" style="text-align:center">${r.clicks||0}</td>
+      <td class="ip">${r.clickIP||'&mdash;'}</td>
+      <td class="reason-cell" title="${r.bounceReason||''}">${r.bounceReason||'&mdash;'}</td>`;
+    tbody.appendChild(tr);
+  });
+  if(!filtered.length){
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td colspan="9" style="text-align:center;padding:32px;color:var(--muted)">No records match the current filters</td>`;
+    tbody.appendChild(tr);
+  }
+}
+
+function downloadCSV(){
+  const heads=['Campaign ID','Campaign Name','Email','Send Date','Delivered Date','Status',
+    'Bounce Type','Bounce Reason','Total Opens','Apple MPP Opens','Open Date','Open IP',
+    'Clicks','Click IP','Click Date','Unsubscribe Date','Complaint Date','List Type','Source File'];
+  const esc=v=>`"${String(v||'').replace(/"/g,'""')}"`;
+  const rows=[heads.map(esc).join(','),...filtered.map(r=>
+    [r.campaignId,r.campaignName,r.email,r.sendDate,r.deliveredDate,r.status,
+     r.bounceType,r.bounceReason,r.totalOpens,r.appleMPP,r.openDate,r.openIP,
+     r.clicks,r.clickIP,r.clickDate,r.unsubDate,r.complaintDate,r.listType,r.source]
+    .map(esc).join(','))];
+  const blob=new Blob([rows.join('\r\n')],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='campaign_analysis_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+}
+</script>
+</body>
+</html>

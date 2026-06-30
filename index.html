@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -323,22 +323,22 @@ function classifyRow(row){
 function getRecommendation(rec){
   const s=rec.status, rl=(rec.bounceReason||'').toLowerCase();
   if(s==='Clicked')
-    return{action:'keep',actionReason:'Engaged — clicked a link',fixTip:'Priority contact for next campaign'};
+    return{action:'keep',actionReason:'Engaged -- clicked a link',fixTip:'Priority contact for next campaign'};
   if(s==='Opened')
-    return{action:'keep',actionReason:'Engaged — opened email',fixTip:'Include in next campaign'};
+    return{action:'keep',actionReason:'Engaged -- opened email',fixTip:'Include in next campaign'};
   if(s==='Opened (Apple MPP)')
-    return{action:'watch',actionReason:'Apple auto-open — real engagement unconfirmed',fixTip:'Send follow-up with strong CTA to confirm interest'};
+    return{action:'watch',actionReason:'Apple auto-open -- real engagement unconfirmed',fixTip:'Send follow-up with strong CTA to confirm interest'};
   if(s==='Delivered - No Open')
     return{action:'watch',actionReason:'Delivered but no engagement',fixTip:'Try a different subject line or send time'};
   if(s==='Sent - Pending')
-    return{action:'retry',actionReason:'Not yet delivered — may still arrive',fixTip:'Wait 24–48h; check again before excluding'};
+    return{action:'retry',actionReason:'Not yet delivered -- may still arrive',fixTip:'Wait 24-48h; check again before excluding'};
   if(s==='Hard Bounce'){
     if(rl.includes('unable to find mx')||rl.includes('mx of domain'))
-      return{action:'remove',actionReason:'Domain has no mail server — likely dead or misspelled',fixTip:'Verify domain spelling; if dead, remove permanently'};
+      return{action:'remove',actionReason:'Domain has no mail server -- likely dead or misspelled',fixTip:'Verify domain spelling; if dead, remove permanently'};
     if(rl.includes('5.1.1')||rl.includes('user unknown')||rl.includes('virtual mailbox')||rl.includes('does not exist'))
-      return{action:'remove',actionReason:'Email address does not exist on this domain',fixTip:'Remove permanently — address is invalid'};
+      return{action:'remove',actionReason:'Email address does not exist on this domain',fixTip:'Remove permanently -- address is invalid'};
     if(rl.includes('overquotaperm')||rl.includes('5.2.2')||rl.includes('inactive'))
-      return{action:'remove',actionReason:'Inbox permanently full / account abandoned',fixTip:'Remove permanently — account is inactive'};
+      return{action:'remove',actionReason:'Inbox permanently full / account abandoned',fixTip:'Remove permanently -- account is inactive'};
     if(rl.includes('relay access denied')||rl.includes('5.7.1')||rl.includes('smtp authentication')||rl.includes('not permitted'))
       return{action:'remove',actionReason:'Server blocks third-party senders for this domain',fixTip:'Remove from list; try LinkedIn or phone outreach instead'};
     if(rl.includes('552')||rl.includes('550'))
@@ -347,15 +347,15 @@ function getRecommendation(rec){
   }
   if(s==='Soft Bounce'){
     if(rl.includes('connection timeout'))
-      return{action:'retry',actionReason:'Receiving server temporarily unreachable',fixTip:'Retry in next campaign — likely a temporary server issue'};
+      return{action:'retry',actionReason:'Receiving server temporarily unreachable',fixTip:'Retry in next campaign -- likely a temporary server issue'};
     if(rl.includes('jfe030050')||rl.includes('unverified address'))
-      return{action:'retry',actionReason:'Mailbox may be disabled or temporarily unavailable',fixTip:'Retry once in 2–4 weeks; remove if it bounces again'};
+      return{action:'retry',actionReason:'Mailbox may be disabled or temporarily unavailable',fixTip:'Retry once in 2-4 weeks; remove if it bounces again'};
     if(rl.includes('4.1.1'))
-      return{action:'retry',actionReason:'Mailbox potentially unavailable — soft rejection',fixTip:'Retry after 2 weeks; remove after 2 consecutive soft bounces'};
+      return{action:'retry',actionReason:'Mailbox potentially unavailable -- soft rejection',fixTip:'Retry after 2 weeks; remove after 2 consecutive soft bounces'};
     if(rl.includes('message delivery failed'))
-      return{action:'retry',actionReason:'Temporary delivery failure — server gave no specific reason',fixTip:'Retry in next campaign; remove after 2 failures'};
+      return{action:'retry',actionReason:'Temporary delivery failure -- server gave no specific reason',fixTip:'Retry in next campaign; remove after 2 failures'};
     if(rl.includes('overquota')&&!rl.includes('perm'))
-      return{action:'retry',actionReason:'Inbox temporarily full',fixTip:'Retry in 2–4 weeks — inbox may clear'};
+      return{action:'retry',actionReason:'Inbox temporarily full',fixTip:'Retry in 2-4 weeks -- inbox may clear'};
     return{action:'retry',actionReason:'Temporary delivery issue',fixTip:'Retry in next campaign; monitor for repeat bounces'};
   }
   return{action:'watch',actionReason:'Unknown status',fixTip:'Review manually'};
@@ -539,10 +539,10 @@ function renderHealth(){
 
 function renderActionGrid(){
   const groups={
-    keep:{label:'Keep — Include Next Time',cls:'ac-keep',btnCls:'btn-export-keep',desc:'These contacts engaged or were successfully delivered. Prioritise them in your next campaign.',icon:'✓'},
-    watch:{label:'Watch — Monitor Engagement',cls:'ac-watch',btnCls:'btn-export-watch',desc:'Delivered but no confirmed human engagement. Include with adjusted subject lines and different send times.',icon:'◎'},
-    retry:{label:'Retry — Temporary Issue',cls:'ac-retry',btnCls:'btn-export-retry',desc:'Soft bounces or pending sends — temporary failures. Retry in your next campaign but watch for repeats.',icon:'↺'},
-    remove:{label:'Remove — Do Not Send',cls:'ac-remove',btnCls:'btn-export-remove',desc:'Hard bounces and permanently invalid addresses. Remove these now to protect sender reputation.',icon:'✕'},
+    keep:{label:'Keep -- Include Next Time',cls:'ac-keep',btnCls:'btn-export-keep',desc:'These contacts engaged or were successfully delivered. Prioritise them in your next campaign.',icon:'✓'},
+    watch:{label:'Watch -- Monitor Engagement',cls:'ac-watch',btnCls:'btn-export-watch',desc:'Delivered but no confirmed human engagement. Include with adjusted subject lines and different send times.',icon:'◎'},
+    retry:{label:'Retry -- Temporary Issue',cls:'ac-retry',btnCls:'btn-export-retry',desc:'Soft bounces or pending sends -- temporary failures. Retry in your next campaign but watch for repeats.',icon:'↺'},
+    remove:{label:'Remove -- Do Not Send',cls:'ac-remove',btnCls:'btn-export-remove',desc:'Hard bounces and permanently invalid addresses. Remove these now to protect sender reputation.',icon:'✕'},
   };
 
   const el=document.getElementById('action-grid');
